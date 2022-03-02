@@ -44,7 +44,7 @@ export class EventManager {
     dispatch(type: EventType, payload?: EventPayload): void {
         for (let listener of this.listeners) {
             if (this.shouldCallListener(listener, type)) {
-                const matchedParams = this.toHandlerPayload(listener, payload, type);
+                const matchedParams = this.toHandlerPayload(listener, type);
                 listener.handler(payload, type, matchedParams);
             }
         }
@@ -52,7 +52,7 @@ export class EventManager {
     shouldCallListener(listener: EventListener, eventType: EventType): boolean {
         return matchPattern(listener.type, eventType) !== null;
     }
-    toHandlerPayload(listener: EventListener, eventPayload: EventPayload, eventType: EventType): MatchParams {
+    toHandlerPayload(listener: EventListener, eventType: EventType): MatchParams {
         let params = matchPattern(listener.type, eventType);
         return params;
     }
